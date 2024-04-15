@@ -1,12 +1,25 @@
 #include "Telnet.h"
 
 #include <string>
+#include <iostream>
 
-Telnet::Telnet(int p) : port_(p) {
+Telnet::Telnet(std::string a, int p) : Networking(a,p) {
 }
 
-Telnet::Telnet(std::string a) : adress_(a) {
-}
+bool Telnet::portCheck() {
+    // Input
+    std::string addr = "ping -n 1 > NUL " + adress_;
 
-void Telnet::portCheck() {
+    // Execute ping:
+    int result = system(addr.data());
+
+    // Result
+    if (result == 0) {
+        std::cout << "Ping successful." << std::endl;
+        return true;
+    }
+    else {
+        std::cout << "Ping failed." << std::endl;
+        return false;
+    }
 }

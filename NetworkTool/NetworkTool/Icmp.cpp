@@ -3,11 +3,12 @@
 #include "Icmp.h"
 
 
-Icmp::Icmp(std::string a) : adress_(a) {}
+Icmp::Icmp(std::string a) : Networking(a) {}
 
 bool Icmp::ping() {
     // Input
     std::string addr = "ping -n 1 > NUL " + adress_;
+    std::cout << adress_ << std::endl;
     
     // Execute ping:
     int result = system(addr.data());

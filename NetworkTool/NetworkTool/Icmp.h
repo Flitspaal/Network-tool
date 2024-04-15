@@ -5,12 +5,11 @@
 
 class Icmp : public Networking {
 public:
-	Icmp() {};
 	Icmp(std::string);
 	virtual bool ping() override;
 
 
 private:
-	std::string adress_;
+	//std::string adress_;
 };
 
