@@ -7,6 +7,7 @@ class Icmp : public Networking {
 public:
 	Icmp(std::string);
 	virtual bool ping() override;
+	virtual bool scan() override;
 
 
 private:
