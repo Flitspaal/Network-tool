@@ -1,9 +1,11 @@
 #include <iostream>
 #include <thread>
 #include <vector>
+#include <set>
 #include "Networking.h"
 #include "Icmp.h"
 #include "Telnet.h"
+
 
 
 int main() {
@@ -16,19 +18,21 @@ int main() {
     int userStart;
     int userEnd;
     std::cin >> userInput;
+
     if(userInput == 1){     
         std::cout << "Enter an IP:";
         std::cin >> userInput2;
         Icmp p(userInput2);
         p.ping();
     }
+
     if (userInput == 2) {
         std::vector<std::thread> ScanT;
-        std::cout << "Enter the first 3 octets (xxx.xxx.xxx.):";
+        std::cout << "Enter the first 3 octets (xxx.xxx.xxx.): ";
         std::cin >> userInput2;
-        std::cout << "Enter the starting octet";
+        std::cout << "Enter the starting octet: ";
         std::cin >> userStart;
-        std::cout << "Enter the end octet";
+        std::cout << "Enter the end octet: ";
         std::cin >> userEnd;
         Icmp pp(userInput2);
 
@@ -36,12 +40,15 @@ int main() {
         int range = (userEnd - userStart + 1) / 2; // Split the range for demonstration
         ScanT.push_back(std::thread(&Icmp::scan, &pp, userStart, userStart + range - 1));
         ScanT.push_back(std::thread(&Icmp::scan, &pp, userStart + range, userEnd));
-
-        for (auto& th : ScanT) {
-            th.join();
-        }
+        
+//        for (auto& th : ScanT) {
+//            th.join();
+//        }
+        ScanT[0].join();
+        ScanT[1].join();
         pp.printResults();
     } 
+
     return 0;
 }
 

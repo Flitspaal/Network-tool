@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <mutex>
+#include <unordered_set>
 #include "Networking.h"
 
 
@@ -13,7 +14,7 @@ public:
 	virtual void printResults() override;
 
 private:
-	std::vector<std::string> results_;
+	std::unordered_set<std::string> results_;
 	std::mutex mtx_;
 	//std::string adress_;
 };
