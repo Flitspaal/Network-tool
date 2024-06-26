@@ -1,7 +1,9 @@
 #include <iostream>
 #include <stdio.h>
 #include <windows.h>
-
+#include <thread>
+#include <sstream>
+#include <chrono>
 #include "Icmp.h"
 
 
@@ -26,16 +28,30 @@ bool Icmp::ping() {
     }
 }
 
-bool Icmp::scan()
+bool Icmp::scan(int b, int e)
 { 
-    for (int i = 0; i <= 255 ; i++)
+    std::ostringstream oss;
+    for (int i = b; i <= e ; i++)
     {
         std::string str = adress_ + std::to_string(i);
         std::string addr = "ping -n 1 > NUL " + str;
         int result = system(addr.data());
         std::cout << std::to_string(i)<<"  " << str << "  " << result << std::endl;
-        if (i == 255) return true;
+        oss << std::to_string(i) << "  " << str << "  " << result << std::endl;
+       
+        std::lock_guard<std::mutex> lock(mtx_); //anti racing conditions
+        results_.push_back(oss.str());
     }
     return true;
+}
+
+void Icmp::printResults() {
+    std::cout << std::endl << "RESULTS:" << std::endl;
+
+    std::lock_guard<std::mutex> lock(mtx_);
+    for (const auto& result : results_) {
+        std::cout << result;
+    }
+    return;
 }
 

@@ -8,11 +8,12 @@ public:
 	Networking(std::string a, int b);
 	Networking(std::string a);
 	Networking(int b);
-	Networking(char s[]);
+	//Networking(char s[]);
 	
 	virtual bool ping() { return true; };
-	virtual bool scan() { return true; };
+	virtual bool scan(int s,int e) { return true; };
 	virtual bool portCheck() { return false; };
+	virtual void printResults() { };
 
 protected:
 	std::string adress_;
