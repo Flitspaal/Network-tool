@@ -37,9 +37,14 @@ int main() {
         Icmp pp(userInput2);
 
         // Create threads for scanning
-        int range = (userEnd - userStart + 1) / 2; // Split the range for demonstration
-        ScanT.push_back(std::thread(&Icmp::scan, &pp, userStart, userStart + range - 1));
-        ScanT.push_back(std::thread(&Icmp::scan, &pp, userStart + range, userEnd));
+        int range = userEnd - userStart + 1;
+        int step = range / 3;
+        int mid1 = userStart + step;
+        int mid2 = userStart + 2 * step;
+
+        ScanT.push_back(std::thread(&Icmp::scan, &pp, userStart, mid1 - 1));
+        ScanT.push_back(std::thread(&Icmp::scan, &pp, mid1, mid2 - 1));
+        ScanT.push_back(std::thread(&Icmp::scan, &pp, mid2, userEnd));
        
         for (auto& th : ScanT) {
             th.join();

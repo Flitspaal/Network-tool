@@ -39,11 +39,9 @@ bool Icmp::scan(int b, int e)
         std::string addr = "ping -n 1 > NUL " + str;
         int result = system(addr.data());
         oss << std::to_string(i) << "  " << str << "  " << result << std::endl;
+
         std::lock_guard<std::mutex> lock(mtx_); //anti racing conditions
-        if (results_.find(oss.str()) == results_.end()) {
-            results_.insert(oss.str());  
-        }
-       
+        results_.insert(oss.str());                
     }
     return true;
 }
