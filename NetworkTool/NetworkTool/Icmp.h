@@ -16,6 +16,7 @@ public:
 private:
 	std::unordered_set<std::string> results_;
 	std::mutex mtx_;
+
 	//std::string adress_;
 };
 

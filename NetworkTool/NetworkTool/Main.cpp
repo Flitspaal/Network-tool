@@ -40,12 +40,11 @@ int main() {
         int range = (userEnd - userStart + 1) / 2; // Split the range for demonstration
         ScanT.push_back(std::thread(&Icmp::scan, &pp, userStart, userStart + range - 1));
         ScanT.push_back(std::thread(&Icmp::scan, &pp, userStart + range, userEnd));
-        
-//        for (auto& th : ScanT) {
-//            th.join();
-//        }
-        ScanT[0].join();
-        ScanT[1].join();
+       
+        for (auto& th : ScanT) {
+            th.join();
+        }
+
         pp.printResults();
     } 
 
